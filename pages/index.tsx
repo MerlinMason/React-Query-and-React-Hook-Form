@@ -1,15 +1,91 @@
-import Features from "../components/Features";
+import { useState } from "react";
+import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
+import Link from "next/link";
+
+import Error from "../components/Error";
+import Pagination from "../components/Pagination";
+import useUsers from "../hooks/useUsers";
+import useDeleteUser from "../hooks/useDeleteUser";
+
+const ITEMS_PER_PAGE = 10;
 
 const Home: React.FC = () => {
+    const [page, setPage] = useState(0);
+    const { isLoading, isError, data } = useUsers(page, ITEMS_PER_PAGE);
+    const deleteUserMutation = useDeleteUser({ page, limit: ITEMS_PER_PAGE });
+    const users = data?.data ?? [];
+
+    if (isError) {
+        return <Error />;
+    }
+
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white text-gray-700 w-96 rounded p-6 shadow-xl">
-                <h1 className="font-bold text-2xl mb-6">Welcome to NextProject</h1>
+        <div className="bg-white text-gray-700 rounded p-6 shadow-xl">
+            <h1 className="text-3xl font-bold mb-6">Users</h1>
+            <table className="w-full text-left mb-6">
+                <tbody className="divide-y divide-gray-200">
+                    {isLoading
+                        ? [...Array(ITEMS_PER_PAGE)].map((_, i) => (
+                              <tr key={i} className="animate-pulse">
+                                  <td>
+                                      <div className="flex items-center gap-4">
+                                          <div className="rounded-full w-12 h-12 my-3 bg-gray-300"></div>
+                                          <div className="flex gap-2">
+                                              <span className="h-4 w-8 rounded bg-gray-300"></span>
+                                              <span className="h-4 w-12 rounded bg-gray-300"></span>
+                                              <span className="h-4 w-16 rounded bg-gray-300"></span>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div className="flex gap-5 justify-end">
+                                          <span className="h-4 w-4 bg-gray-300 rounded"></span>
+                                          <span className="h-4 w-4 bg-gray-300 rounded"></span>
+                                      </div>
+                                  </td>
+                              </tr>
+                          ))
+                        : users.map(({ id, picture, title, firstName, lastName }) => (
+                              <tr key={id}>
+                                  <td>
+                                      <div className="flex items-center gap-4">
+                                          <img
+                                              src={picture}
+                                              alt={firstName}
+                                              className="rounded-full w-12 h-12 my-3"
+                                          />
+                                          <span className="capitalize text-lg">{`${title} ${firstName} ${lastName}`}</span>
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div className="flex gap-5 justify-end">
+                                          <button
+                                              onClick={() => deleteUserMutation.mutate(id)}
+                                              disabled={deleteUserMutation.isLoading}
+                                              className="disabled:opacity-50"
+                                          >
+                                              <TrashIcon className="w-6 h-6"></TrashIcon>
+                                          </button>
+                                          <Link href={`/users/${id}`}>
+                                              <a>
+                                                  <PencilIcon className="w-6 h-6"></PencilIcon>
+                                              </a>
+                                          </Link>
+                                      </div>
+                                  </td>
+                              </tr>
+                          ))}
+                </tbody>
+            </table>
 
-                <p className="mb-2">An mildly opinionated starting point for Next.js projects.</p>
-
-                <Features />
-            </div>
+            <Pagination
+                currentPage={page}
+                itemsPerPage={ITEMS_PER_PAGE}
+                totalItems={data?.total}
+                onPaginate={(nextPage) => {
+                    setPage(nextPage);
+                }}
+            />
         </div>
     );
 };
