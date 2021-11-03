@@ -1,0 +1,14 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "eslint.run": "onType",
+    "editor.formatOnSave": true,
+    "eslint.alwaysShowStatus": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.fixAll.stylelint": true
+    },
+    "search.exclude": {
+        ".next/**/*": true,
+        "node_modules/**/*": true
+    }
+}
