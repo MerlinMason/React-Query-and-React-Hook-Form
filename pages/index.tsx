@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
@@ -11,10 +11,17 @@ import Button from "../components/forms/Button";
 const ITEMS_PER_PAGE = 10;
 
 const Home: React.FC = () => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
     const { isLoading, isError, data } = useUsers(page, ITEMS_PER_PAGE);
     const deleteUserMutation = useDeleteUser({ page, limit: ITEMS_PER_PAGE });
     const users = data?.data ?? [];
+
+    useEffect(() => {
+        if (data?.total) {
+            setTotalCount(data.total);
+        }
+    }, [data]);
 
     if (isError) {
         return <Error />;
@@ -22,7 +29,7 @@ const Home: React.FC = () => {
 
     return (
         <div className="bg-white text-gray-700 rounded p-6 shadow-xl">
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between">
                 <h1 className="text-3xl font-bold mb-6">Users</h1>
 
                 <Button as="link" href="/users/create">
@@ -38,9 +45,8 @@ const Home: React.FC = () => {
                                       <div className="flex items-center gap-4">
                                           <div className="rounded-full w-12 h-12 my-3 bg-gray-300"></div>
                                           <div className="flex gap-2">
-                                              <span className="h-4 w-8 rounded bg-gray-300"></span>
-                                              <span className="h-4 w-12 rounded bg-gray-300"></span>
                                               <span className="h-4 w-16 rounded bg-gray-300"></span>
+                                              <span className="h-4 w-20 rounded bg-gray-300"></span>
                                           </div>
                                       </div>
                                   </td>
@@ -52,16 +58,16 @@ const Home: React.FC = () => {
                                   </td>
                               </tr>
                           ))
-                        : users.map(({ id, picture, title, firstName, lastName }) => (
+                        : users.map(({ id, avatar, firstName, lastName }) => (
                               <tr key={id}>
                                   <td>
                                       <div className="flex items-center gap-4">
                                           <img
-                                              src={picture}
+                                              src={avatar}
                                               alt={firstName}
                                               className="rounded-full w-12 h-12 my-3"
                                           />
-                                          <span className="capitalize text-lg">{`${title} ${firstName} ${lastName}`}</span>
+                                          <span className="capitalize text-lg">{`${firstName} ${lastName}`}</span>
                                       </div>
                                   </td>
                                   <td>
@@ -88,7 +94,7 @@ const Home: React.FC = () => {
             <Pagination
                 currentPage={page}
                 itemsPerPage={ITEMS_PER_PAGE}
-                totalItems={data?.total}
+                totalItems={totalCount}
                 onPaginate={(nextPage) => {
                     setPage(nextPage);
                 }}
