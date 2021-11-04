@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 
-import type { Users } from "../types";
+import type { User, Users } from "../types";
 
 type Context = { previousUsers: Users };
 function isContext(value: unknown): value is Context {
@@ -12,16 +12,18 @@ const useDeleteUser = ({
     page,
     limit,
     onSuccess,
+    removeOnSuccess = false,
 }: {
     page?: number;
     limit?: number;
     onSuccess?: () => void;
+    removeOnSuccess?: boolean;
 }) => {
     const queryClient = useQueryClient();
 
     const deleteUserMutation = useMutation(
-        async (id: string): Promise<string> => {
-            const { data } = await axios.delete(`/api/user/${id}`);
+        async (id?: string): Promise<User> => {
+            const { data } = await axios.delete(`/api/users/${id}`);
             return data;
         },
         {
@@ -44,7 +46,12 @@ const useDeleteUser = ({
 
                 return { previousUsers };
             },
-            onSuccess: () => {
+            onSuccess: async () => {
+                if (removeOnSuccess) {
+                    // When deleting a user form the single user page, we want to ensure we have fresh data when being redirected back to the index.
+                    // However, when deleting from the index we don't want to reload the whole index
+                    await queryClient.removeQueries("users");
+                }
                 if (onSuccess) {
                     onSuccess();
                 }
