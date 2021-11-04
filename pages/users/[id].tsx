@@ -9,11 +9,7 @@ const User: React.FC = () => {
     const id = router.query.id?.toString() ?? "";
     const { isLoading, isError, data: user } = useUser(id);
 
-    if (!user || isLoading) {
-        return <>Loading...</>;
-    }
-
-    return <UserForm user={user} />;
+    return <UserForm user={user} isLoading={isLoading} />;
 };
 
 export default User;
