@@ -6,6 +6,7 @@ import Error from "../components/Error";
 import Pagination from "../components/Pagination";
 import useUsers from "../hooks/useUsers";
 import useDeleteUser from "../hooks/useDeleteUser";
+import Button from "../components/forms/Button";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -21,7 +22,13 @@ const Home: React.FC = () => {
 
     return (
         <div className="bg-white text-gray-700 rounded p-6 shadow-xl">
-            <h1 className="text-3xl font-bold mb-6">Users</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold mb-6">Users</h1>
+
+                <Button as="link" href="/users/create">
+                    Create User
+                </Button>
+            </div>
             <table className="w-full text-left mb-6">
                 <tbody className="divide-y divide-gray-200">
                     {isLoading
