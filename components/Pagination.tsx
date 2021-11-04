@@ -8,16 +8,16 @@ interface Props {
 }
 
 const Pagination: React.FC<Props> = ({
-    currentPage = 0,
-    itemsPerPage,
+    currentPage = 1,
+    itemsPerPage = 1,
     totalItems = 1,
     onPaginate,
 }) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const currentPageFormatted = currentPage + 1;
+
     return (
         <div className="flex items-center justify-between">
-            {currentPage > 0 ? (
+            {currentPage > 1 ? (
                 <button type="button" onClick={() => onPaginate(currentPage - 1)}>
                     <ChevronLeftIcon className="w-6" />
                 </button>
@@ -25,9 +25,9 @@ const Pagination: React.FC<Props> = ({
                 <ChevronLeftIcon className="w-6 text-gray-300" />
             )}
 
-            <div>{`${currentPageFormatted} of ${totalPages}`}</div>
+            <div>{`${currentPage} of ${totalPages}`}</div>
 
-            {currentPageFormatted < totalPages ? (
+            {currentPage < totalPages ? (
                 <button type="button" onClick={() => onPaginate(currentPage + 1)}>
                     <ChevronRightIcon className="w-6" />
                 </button>
