@@ -11,13 +11,13 @@ export default async function handler(
 
     try {
         if (request.method === "GET") {
-            const externalResponse = await axios.get(`${process.env.DUMMY_API_BASE_URL}/user`, {
+            const externalResponse = await axios.get(`${process.env.MOCK_API_BASE_URL}/users`, {
                 params: { page, limit },
             });
             response.status(200).json(externalResponse.data);
         } else if (request.method === "POST") {
             const externalResponse = await axios.post(
-                `${process.env.DUMMY_API_BASE_URL}/user`,
+                `${process.env.MOCK_API_BASE_URL}/users`,
                 request.body
             );
             response.status(200).json(externalResponse.data);

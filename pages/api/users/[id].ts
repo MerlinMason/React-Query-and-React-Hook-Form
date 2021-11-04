@@ -1,30 +1,30 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import type { UserFull, BackendError } from "../../../types";
+import type { User, BackendError } from "../../../types";
 
 export default async function handler(
     request: NextApiRequest,
-    response: NextApiResponse<UserFull | BackendError>
+    response: NextApiResponse<User | BackendError>
 ) {
     const { id } = request.query;
 
     try {
         if (request.method === "GET") {
             const externalResponse = await axios.get(
-                `${process.env.DUMMY_API_BASE_URL}/user/${id}`,
+                `${process.env.MOCK_API_BASE_URL}/users/${id}`,
                 request.body
             );
             response.status(200).json(externalResponse.data);
         } else if (request.method === "PUT") {
             const externalResponse = await axios.put(
-                `${process.env.DUMMY_API_BASE_URL}/user/${id}`,
+                `${process.env.MOCK_API_BASE_URL}/users/${id}`,
                 request.body
             );
             response.status(200).json(externalResponse.data);
         } else if (request.method === "DELETE") {
             const externalResponse = await axios.delete(
-                `${process.env.DUMMY_API_BASE_URL}/user/${id}`
+                `${process.env.MOCK_API_BASE_URL}/users/${id}`
             );
             response.status(200).json(externalResponse.data);
         } else {
