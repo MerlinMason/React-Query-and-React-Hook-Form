@@ -1,35 +1,19 @@
-# NextProject
+# React-Query & React-Hook-Form
 
-An mildly opinionated starting point for Next.js projects.
+> This project was built from [MerlinMason/NextProject](https://github.com/MerlinMason/NextProject), checkout that repo for further details.
 
-Because setting stuff up is boring and building stuff is fun.
+This was an experiment to try out two libraries [React-Query](https://react-query.tanstack.com) and [React-Hook-Form](https://react-hook-form.com), with the aim of learning how they work and seeing if I can get them to play nicely together, all while improving my TypeScript skills.
 
-Out of the box support for:
+## Running locally
+The project uses [MockAPI.io](https://mockapi.io), you can create a free account there, create a resource called `users` configured like so:
+![image](https://user-images.githubusercontent.com/3215478/140415976-5ac9c4da-e2c5-4d56-aa23-b0858c88da14.png)
 
--   Typescript
--   Tailwind (with JIT)
--   Heroicons
--   Eslint (with Airbnb, jsx-a11y etc)
--   Prettier
--   Jest (with Testing Library)
--   Cypress (with Testing Library)
-
-# Development
-
-Install dependencies with `yarn`
-
-Run dev server with `yarn dev`
-
-Create prod build with `yarn build`
-
-Interactively update dependencies with `yarn bump`
-
-Run Jest tests with `yarn test:jest`
-
-Run Cypress tests for dev with `yarn test:cypress:dev`
-
-Run Cypress tests on CLI with `yarn test:cypress`
-
-# Deploy
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+You'll also have to modify the response of `GET /users` to:
+```
+{
+  "data": "$mockData",
+  "total": "$count"
+}
+```
+Create a `.env.local` file in the root of the project with the following value `MOCK_API_BASE_URL=urlGivenToYouFromMockAPI.io`.
+Finally, run `yarn && yarn dev` to install dependencies and start the `localhost:3000` dev server.
