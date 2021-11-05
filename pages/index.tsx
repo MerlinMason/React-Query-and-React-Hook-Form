@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     const users = data?.data ?? [];
 
     useEffect(() => {
-        if (data?.total) {
+        if (data && Number.isInteger(data.total)) {
             setTotalCount(data.total);
         }
     }, [data]);
