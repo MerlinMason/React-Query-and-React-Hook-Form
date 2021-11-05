@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import type { User, BackendError } from "../../../types";
