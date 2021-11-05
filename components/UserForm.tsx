@@ -52,8 +52,6 @@ const UserForm: React.FC<Props> = ({ user = {}, isLoading = false }) => {
         });
     }, [user]);
 
-    // isLoading = true;
-
     return (
         <>
             <Link href="/">
