@@ -10,13 +10,13 @@ const useSaveUser = ({
 } = {}) => {
     const queryClient = useQueryClient();
     const saveUserMutation = useMutation(
-        async ({ id, firstName, lastName, email }: User): Promise<string> => {
+        async ({ id, ...restUserProperties }: User): Promise<string> => {
             if (id) {
-                const { data } = await axios.put(`/api/users/${id}`, { id, firstName, lastName });
+                const { data } = await axios.put(`/api/users/${id}`, { id, ...restUserProperties });
 
                 return data;
             } else {
-                const { data } = await axios.post("/api/users", { firstName, lastName, email });
+                const { data } = await axios.post("/api/users", { ...restUserProperties });
 
                 return data;
             }
