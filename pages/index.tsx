@@ -66,6 +66,7 @@ const Home: React.FC = () => {
                                               src={avatar}
                                               alt={firstName}
                                               className="rounded-full w-12 h-12 my-3"
+                                              data-testid={`avatar_${id}`}
                                           />
                                           <span className="capitalize text-lg">{`${firstName} ${lastName}`}</span>
                                       </div>
