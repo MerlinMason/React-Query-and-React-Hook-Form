@@ -37,7 +37,7 @@ const Pagination: React.FC<Props> = ({
                 <span aria-label={`Current page ${currentPage}`} aria-current="true">
                     {currentPage}
                 </span>
-                of
+                {" of "}
                 <span aria-label={`Total pages ${totalPages}`}>{totalPages}</span>
             </div>
 
