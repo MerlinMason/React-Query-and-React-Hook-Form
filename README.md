@@ -19,7 +19,8 @@ The create and edit form is managed through React-Hook-Form, with custom form el
 
 
 ## Running locally
-The project uses [MockAPI.io](https://mockapi.io), you can create a free account there, create a resource called `users` configured like so:
+The project uses [MockAPI.io](https://mockapi.io), you can create a free account there, then create a resource called `users` configured like so:
+
 ![image](https://user-images.githubusercontent.com/3215478/140415976-5ac9c4da-e2c5-4d56-aa23-b0858c88da14.png)
 
 You'll also have to modify the response of `GET /users` to:
