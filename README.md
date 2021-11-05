@@ -15,5 +15,5 @@ You'll also have to modify the response of `GET /users` to:
   "total": "$count"
 }
 ```
-Create a `.env.local` file in the root of the project with the following value `MOCK_API_BASE_URL=urlGivenToYouFromMockAPI.io`.
+Create a `.env.local` file in the root of the project with the following value `MOCK_API_BASE_URL=https://<UNIQUE_ID>.mockapi.io`.
 Finally, run `yarn && yarn dev` to install dependencies and start the `localhost:3000` dev server.
