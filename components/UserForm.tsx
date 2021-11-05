@@ -28,7 +28,7 @@ const UserForm: React.FC<Props> = ({ user = {}, isLoading = false }) => {
         formState: { errors },
     } = useForm({ mode: "onBlur" });
 
-    const saveUser = useSaveUser({
+    const saveUserMutation = useSaveUser({
         onSuccess: () => {
             router.push("/");
         },
@@ -42,7 +42,7 @@ const UserForm: React.FC<Props> = ({ user = {}, isLoading = false }) => {
     });
 
     const onSubmit = (data: User) => {
-        saveUser.mutate(data);
+        saveUserMutation.mutate(data);
     };
 
     // set the initial form values
